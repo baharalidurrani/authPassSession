@@ -3,9 +3,9 @@ const Router = express.Router();
 const Login = require('../Controllers/LoginController');
 const Register = require('../Controllers/RegisterController');
 const Home = require('../Controllers/HomeController');
-const profile = require('../Controllers/ProfileController');
+const Profile = require('../Controllers/ProfileController');
 const passport = require('passport');
-const auth = require('../Middleware/passport_auth');
+const Auth = require('../Middleware/passport_auth');
 
 module.exports = Router;
 
@@ -13,18 +13,18 @@ module.exports = Router;
 Router.get('/', Home);
 
 //Login Route
-Router.get('/login', auth.restric, Login.get);
+Router.get('/login', Auth.restric, Login.get);
 Router.post('/login', passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/login'
 }));
 //Register route
 
-Router.get('/register', auth.restric, Register.get);
+Router.get('/register', Auth.restric, Register.get);
 Router.post('/register', Register.post);
 
-Router.get('/profile', auth.islogin, profile.display);
+Router.get('/profile', Auth.islogin, Profile.display);
 Router.get('/logout', require('../Controllers/LogoutController'));
 
-Router.get('/edit', auth.islogin, profile.edit);
-Router.post('/edit', auth.islogin, profile.update);
+Router.get('/edit', Auth.islogin, Profile.edit);
+Router.post('/edit', Auth.islogin, Profile.update);
