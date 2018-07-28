@@ -3,35 +3,35 @@ const bcrypt = require('bcrypt');
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
-    Name: {
+    _name: {
         type: String,
         trim: true
     },
-    Age: {
+    _age: {
         type: Number,
         trim: true
     },
-    Email: {
+    _email: {
         unique: true,
         type: String,
         required: true
     },
-    Password: {
+    _password: {
         type: String
     },
-    Gender: {
+    _gender: {
         type: String
     }
 });
 
 UserSchema.pre('save', function (next) {
     var user = this;
-    if (!user.isModified('Password')) next();
+    if (!user.isModified('_password')) next();
 
     bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(user.Password, salt, (error, hash) => {
+        bcrypt.hash(user._password, salt, (error, hash) => {
 
-            user.Password = hash;
+            user._password = hash;
             next();
 
         })
@@ -42,7 +42,7 @@ UserSchema.pre('save', function (next) {
 
 UserSchema.methods.comparePassword = function (temp_pass, callback) {
     var user = this;
-    bcrypt.compare(temp_pass, user.Password, (err, Ismatch) => {
+    bcrypt.compare(temp_pass, user._password, (err, Ismatch) => {
         if (err) {
             console.log(err);
             return callback(err);

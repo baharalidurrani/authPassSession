@@ -1,5 +1,5 @@
 const passport = require('passport');
-const UserModel = require('../Models/user');
+const UserModel = require('../Models/User');
 const LocalStrategy = require('passport-local').Strategy;
 
 passport.serializeUser(function (user, done) {
@@ -26,7 +26,7 @@ passport.use('local', new LocalStrategy({
 }, function (req, EMAIL, PASS, done) {
 
     UserModel.findOne({
-        Email: EMAIL
+        _email: EMAIL
     }).then((user) => {
 
         if (!user) return done(null, false);

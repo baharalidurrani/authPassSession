@@ -1,4 +1,4 @@
-const UserModel = require('../Models/user');
+const UserModel = require('../Models/User');
 exports.display = (req, res) => {
 
     res.render('Profile', {
@@ -15,8 +15,8 @@ exports.update = (req, res) => {
 
     console.log(req.user._id);
     UserModel.findByIdAndUpdate(req.user._id, {
-        Email: req.body.EMAIL,
-        Name: req.body.NAME
+        _email: req.body.EMAIL,
+        _name: req.body.NAME
     }).then((user) => {
         console.log(user);
     })
